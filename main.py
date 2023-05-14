@@ -46,18 +46,20 @@ class PDFMerger:
         self.merge_button.pack(pady=(20, 30))
 
     def select_files(self):
-        file = None
-        file = filedialog.askopenfilenames(
+
+        files = filedialog.askopenfilenames(
             initialdir="\\Desktop",
             title="Select Files",
             filetypes=(("PDF files", "*.pdf"), ("all files", "*.*")),
-        )[0]
+        )
 
-        print(file)
-
-        if (file != None):
-
+        if files:
+            file = files[0]
             self.files.append(file)
+
+        else:
+
+            print("No files selected.")
 
         if len(self.files) > 0:
             self.file_label.config(
@@ -66,7 +68,9 @@ class PDFMerger:
     def merge_files(self):
         if len(self.files) > 0:
 
-            merged_destination = filedialog.asksaveasfilename()
+            merged_destination = filedialog.asksaveasfilename(
+                filetypes=(("PDF files", "*.pdf"), ("all files", "*.*"))
+            )
 
             merger = PyPDF2.PdfWriter()
             print(self.files)
